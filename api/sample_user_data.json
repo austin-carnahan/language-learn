@@ -1,0 +1,58 @@
+{
+    "user-id": 12345,
+    "username": "austin",
+    "progress": {
+      "spanish": {
+        "unit1": {
+          "completed": true,
+          "quizzes": {
+            "1": true ,
+            "2": true ,
+            "3": true 
+          }
+        },
+        "unit2": {
+          "completed": false,
+          "quizzes": {
+            "1": true ,
+            "2": false ,
+            "3": false 
+          }
+        },
+        "unit3": {
+          "completed": false,
+          "quizzes": {
+            "1": false ,
+            "2": false ,
+            "3": false 
+          }
+        }
+      },
+      "swahili": {
+        "unit1": {
+          "completed": true,
+          "quizzes": {
+            "1": true ,
+            "2": true ,
+            "3": true 
+          }
+        },
+        "unit2": {
+          "completed": false,
+          "quizzes": {
+            "1": true ,
+            "2": true ,
+            "3": false 
+          }
+        },
+        "unit3": {
+          "completed": false,
+          "quizzes": {
+            "1": false ,
+            "2": false ,
+            "3": false 
+          }
+        }
+      }
+    }
+  }
