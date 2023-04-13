@@ -18,4 +18,4 @@ class Activity(db.Model):
     unit3_quiz3 = db.Column(db.Boolean, default=False);
 
 def __repr__(self):
-        return '<Activity %r>' % self.user_id % self.language_id
+        return f'<Activity {self.user} {self.language_id}>'
