@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, onMounted } from 'vue';
 
   // const fetch = require('node-fetch');
   const quizURL = "http://127.0.0.1:5000/quiz"

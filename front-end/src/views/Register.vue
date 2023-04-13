@@ -1,3 +1,56 @@
+<script setup>
+  import { store } from '../store.js';
+  import { ref, onMounted } from 'vue'
+
+  let username = ref("");
+  let password = ref("");
+  let confirmPassword = ref("");
+
+  function validateInput(un, pw, cpw) {
+    if (!un || !pw || !cpw){
+      alert('Please enter all the fields.');
+      return false;
+    } else if(pw != cpw) {
+      alert('Password and Confirm Password fields should match');
+      return false;
+    } else {
+      return true;
+    };
+  };
+
+  function register() {
+    if (validateInput(username.value, password.value, confirmPassword.value)) {
+      console.log(username.value);
+      console.log(password.value);
+      const options = {
+        username: username.value,
+        password: password.value 
+      }
+
+      // send register data to the API 
+      fetch("http://127.0.0.1:5000/register", {
+        method: 'POST',
+        body: JSON.stringify(options),
+        headers: { 'Content-Type': 'application/json' } 
+      }).then(res => res.json().then(json => ({
+        response: res,
+        json
+      })))
+      .then(({ response, json }) => {
+          if(!response.ok){
+            throw new Error(response.status + " " + json.message);
+          }
+          store.setUser(json.id, json.username)
+      
+      })
+      .catch(err => {
+        alert('Unable to register. ' + err)
+      })
+    }
+  }
+
+</script>
+
 <template>
 
   <div>
@@ -5,9 +58,6 @@
       <form @submit.prevent="register">
       <label for="username">Username:</label>
       <input type="text" id="username" v-model="username" />
-      <br />
-      <label for="email">Email:</label>
-      <input type="email" id="email" v-model="email" />
       <br />
       <label for="password">Password:</label>
       <input type="password" id="password" v-model="password" />
@@ -24,39 +74,6 @@
     <router-link to = "/" class="home">Home</router-link>
   </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      username: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    }
-  },
-  methods: {
-    register() {
-      if (this.username && this.email && this.password && this.confirmPassword && this.password == this.confirmPassword) 
-      {
-      // Perform registration logic here
-      // For example, send a request to a server
-      // with the registration information
-      window.location.href = '/multiple-choice'
-    } 
-    
-    else if(this.username && this.email && this.password && this.confirmPassword &&this.password != this.confirmPassword)
-    {
-      alert('Password and Confirm Password fields should match')
-    }
-    else {
-        alert('Please enter all the fields.')
-      }
-      
-    },
-  },
-}
-</script>
 
 <style>
 body {

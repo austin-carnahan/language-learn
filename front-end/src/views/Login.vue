@@ -1,3 +1,39 @@
+<script setup>
+  import { store } from '../store.js';
+  import { ref, onMounted } from 'vue';
+
+  let username = ref("");
+  let password = ref("");
+
+  function login() {
+
+    const options = { 
+      username: username.value,
+      password: password.value 
+    }
+
+    // send login data to the API 
+    fetch("http://127.0.0.1:5000/login", { 
+      method: 'POST',
+      body: JSON.stringify(options),
+      headers: { 'Content-Type': 'application/json' } 
+    }).then(res => res.json().then(json => ({
+        response: res,
+        json
+      })))
+      .then(({ response, json }) => {
+          if(!response.ok){
+            throw new Error(response.status + " " + json.message);
+          }
+          store.setUser(json.id, json.username)   
+      })
+      .catch(err => {
+        alert('Unable to login. ' + err)
+      })
+  }
+
+</script>
+
 <template>
   <div>
     <div id="login">
@@ -21,29 +57,6 @@
     <router-link to = "/" class="home">Home</router-link>
   </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      username: '',
-      password: '',
-    }
-  },
-  methods: {
-    login() {
-      if (this.username && this.password) {
-      // Perform login logic here
-      // For example, send a request to a server
-      // with the username and password
-      window.location.href = '/multiple-choice'
-    } else {
-        alert('Please enter your username and password.')
-      }
-    },
-  },
-}
-</script>
 
 <style>
 body {
